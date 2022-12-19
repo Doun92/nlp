@@ -20,14 +20,16 @@ class Preparation_text:
         # TODO: Transformer ça en fonction
         # Comprendre ce qui se passe
         apostrophe = "’"
-        print(liste)
+        # print(liste)
         for el in liste:
-            print(el)
-            # if apostrophe in el:
-                # sans_apostrophe = el.split(liste)
-            #     if sans_apostrophe[0] in ["d", "qu"]:
-            #         sans_apostrophe[0] = sans_apostrophe[0]+"e"
-            #     # print(sans_apostrophe)
+            # print(el)
+            if apostrophe in el:
+                # print(el)
+                sans_apostrophe = el.split(apostrophe)
+                # print(sans_apostrophe)
+                if sans_apostrophe[0] in ["d", "qu"]:
+                    sans_apostrophe[0] = sans_apostrophe[0]+"e"
+                # print(sans_apostrophe)
             #     # TODO
             #     # On devrait aller dans le dictionnaire et voir si sans_apostrophe[0] est féminin ou masculin, 1er cas +a, deuxième cas +e
             #     correction = ' '.join(sans_apostrophe)
