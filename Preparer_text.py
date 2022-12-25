@@ -7,13 +7,20 @@ class Preparation_text:
             print(content)
             f.close()
 
-    def words_in_texte(self, texte):
+    def words_in_texte(self, texte, path_to_modif, to_txt: bool = False):
+        # TODO: Get title from texte
+        print(texte)
         with open(texte, 'r', encoding='utf8') as f:
             content = f.read()
             one_line = content.replace('\n', ' ')
             one_line = one_line.replace('\xa0', ' ')
             # print(one_line)
             f.close()
+        
+        # TODO: If to_txt = True: create a texte file in path_to_modif
+        # Also, make possible to create folders if they do not exist.
+        # if to_txt:
+
         return one_line
 
     def retirer_apostrophe(self, liste):
@@ -69,11 +76,21 @@ class Preparation_text:
                 # Il ne faut donc pas séparer par caractère, mais pas "mot"
                 liste_de_mots = one_line.split(" ")
                 liste_de_mots = list(filter(None, liste_de_mots))
-                # print(liste_de_mots)
                 text_ss_apostrophe = self.retirer_apostrophe(liste_de_mots)
-                print(text_ss_apostrophe)
-        # else:
-        #     for character in texte:
-        #         if character in ponctuation:
-        #             texte_sans_ponctuation = texte.replace(character, '')
-        #             print(texte_sans_ponctuation)
+        else:
+            one_line = texte.replace('\n', ' ')
+            one_line = one_line.replace('\xa0', ' ')
+            for character in one_line:
+                if character in ponctuation:
+                    one_line = one_line.replace(character, '')
+                elif character in ponctuation_avec_espace:
+                    one_line = one_line.replace(character, ' ')
+            # Pour l'apostrophe, le traitement est un peu spécial puisqu'il faut savoir si le nom est masculin féminin
+            # Il ne faut donc pas séparer par caractère, mais pas "mot"
+            liste_de_mots = one_line.split(" ")
+            liste_de_mots = list(filter(None, liste_de_mots))
+            text_ss_apostrophe = self.retirer_apostrophe(liste_de_mots)
+        
+        # On créé un fichier texte sans la ponctuation
+
+        return text_ss_apostrophe
