@@ -18,9 +18,20 @@ texte_traité = Preparer_text.Preparation_text()
 
 # texte_traité.read_texte(path_to_text)
 
-one_line = texte_traité.words_in_texte(path_to_text, path_to_modif)
-print(one_line)
+one_line = texte_traité.words_in_texte(path_to_text, path_to_modif,True)
 
-# testwith_texte = texte_traité.remove_punctuation(path_to_text)
-text_ss_ponctuation = texte_traité.remove_punctuation(one_line)
-print(text_ss_ponctuation)
+
+# testwith_texte = texte_traité.remove_punctuation(path_to_text, path_to_modif, True)
+text_ss_ponctuation = texte_traité.remove_punctuation(one_line, path_to_modif, True, titre)
+
+# TODO: 
+"""
+Créer un fichier qui fait une ligne par mot.
+Lire le fichier
+Faire le csv de base pour le dictionnaire
+
+Pour chaque mot, chercher sa forme dans
+1) Dans mes listes
+2) Le Wiktionnaire
+3) La Conjugaison de l'obs
+"""

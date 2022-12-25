@@ -1,3 +1,5 @@
+import os
+
 class Preparation_text:
     
     # Lis le texte
@@ -7,9 +9,23 @@ class Preparation_text:
             print(content)
             f.close()
 
+    def create_file(self, path_to_modif, txt_str, titre, modification):
+        # Checks if the path already exist, if not, creates it
+        if os.path.exists(path_to_modif) == False:
+            os.makedirs(f"{path_to_modif}")
+
+        # Write the file
+        one_line_file = open(
+            f"{path_to_modif}/{titre}_{modification}.txt", "w", encoding='utf8')
+        one_line_file.write(txt_str)
+        one_line_file.close()
+
     def words_in_texte(self, texte, path_to_modif, to_txt: bool = False):
-        # TODO: Get title from texte
-        print(texte)
+        # Title of the raw file
+        title = texte.split("/")[-1][:-4]
+        # print(title)
+
+        # Reads the file and create a big one line text
         with open(texte, 'r', encoding='utf8') as f:
             content = f.read()
             one_line = content.replace('\n', ' ')
@@ -17,9 +33,10 @@ class Preparation_text:
             # print(one_line)
             f.close()
         
-        # TODO: If to_txt = True: create a texte file in path_to_modif
-        # Also, make possible to create folders if they do not exist.
-        # if to_txt:
+        # If to_txt=True, create a txt file
+        modification = "one_line"
+        if to_txt:
+            self.create_file(path_to_modif, one_line, title, modification)
 
         return one_line
 
@@ -56,12 +73,15 @@ class Preparation_text:
                 nouvelle_liste.append(el)
         return nouvelle_liste
 
-    def remove_punctuation(self, texte):
+    def remove_punctuation(self, texte, path_to_modif, to_txt: bool = False, title=None):
+        modification = 'ss_ponctuation'
+
         ponctuation = ['.', '?', '!', ',',
                        ';' ':', '"', '[', ']', '«', '»', '/']
         ponctuation_avec_espace = ['(', ')', '-']
         
         if texte[-4:] == '.txt':
+            title_from_pathtitle = texte.split("/")[-1][:-4]
             with open(texte, 'r', encoding='utf8') as f:
                 content = f.read()
                 # Retirer la ponctuation inutile
@@ -77,6 +97,12 @@ class Preparation_text:
                 liste_de_mots = one_line.split(" ")
                 liste_de_mots = list(filter(None, liste_de_mots))
                 text_ss_apostrophe = self.retirer_apostrophe(liste_de_mots)
+                # print(text_ss_apostrophe)
+                text_ss_apostrophe = ' '.join(text_ss_apostrophe)
+                # On créé un fichier texte sans la ponctuation
+                # If to_txt=True, create a txt file
+                if to_txt:
+                    self.create_file(path_to_modif, text_ss_apostrophe, title_from_pathtitle, modification)
         else:
             one_line = texte.replace('\n', ' ')
             one_line = one_line.replace('\xa0', ' ')
@@ -90,7 +116,6 @@ class Preparation_text:
             liste_de_mots = one_line.split(" ")
             liste_de_mots = list(filter(None, liste_de_mots))
             text_ss_apostrophe = self.retirer_apostrophe(liste_de_mots)
-        
-        # On créé un fichier texte sans la ponctuation
-
+            text_ss_apostrophe = ' '.join(text_ss_apostrophe)
+            self.create_file(path_to_modif, text_ss_apostrophe,title, modification)
         return text_ss_apostrophe
