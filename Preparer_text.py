@@ -99,6 +99,7 @@ class Preparation_text:
                 text_ss_apostrophe = self.retirer_apostrophe(liste_de_mots)
                 # print(text_ss_apostrophe)
                 text_ss_apostrophe = ' '.join(text_ss_apostrophe)
+                text_ss_apostrophe = text_ss_apostrophe.lower()
                 # On créé un fichier texte sans la ponctuation
                 # If to_txt=True, create a txt file
                 if to_txt:
@@ -117,5 +118,37 @@ class Preparation_text:
             liste_de_mots = list(filter(None, liste_de_mots))
             text_ss_apostrophe = self.retirer_apostrophe(liste_de_mots)
             text_ss_apostrophe = ' '.join(text_ss_apostrophe)
-            self.create_file(path_to_modif, text_ss_apostrophe,title, modification)
+            text_ss_apostrophe = text_ss_apostrophe.lower()
+            # If to_txt=True, create a txt file
+            if to_txt:
+                self.create_file(path_to_modif, text_ss_apostrophe, title_from_pathtitle, modification)
+            print("Passe par ici")
         return text_ss_apostrophe
+
+    # Compte les mots
+    def count_word(self, texte):
+
+        # Crée un dictionnaire vide pour stocker les occurrences de chaque mot
+        occurrences = {}
+
+        if texte[-4:] == '.txt':
+            with open(texte, 'r', encoding='utf8') as f:
+                content = f.read()
+                mots = content.split()
+                for mot in mots:
+                    # Si le mot est déjà dans le dictionnaire, incrémente sa valeur de 1
+                    if mot in occurrences:
+                        occurrences[mot] += 1
+                    # Sinon, ajoute le mot au dictionnaire avec une valeur de 1
+                    else:
+                        occurrences[mot] = 1
+        else:
+            mots = texte.split()
+            for mot in mots:
+                # Si le mot est déjà dans le dictionnaire, incrémente sa valeur de 1
+                if mot in occurrences:
+                    occurrences[mot] += 1
+                # Sinon, ajoute le mot au dictionnaire avec une valeur de 1
+                else:
+                    occurrences[mot] = 1
+        print(occurrences)
